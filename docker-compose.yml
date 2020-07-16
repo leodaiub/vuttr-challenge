@@ -30,5 +30,3 @@ services:
       - 1234:1234
     links:
       - back-end
-    tty: true
-    stdin_open: true
