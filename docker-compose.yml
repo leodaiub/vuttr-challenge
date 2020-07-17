@@ -11,22 +11,25 @@ services:
       POSTGRES_DB: "test"
   back-end:
     build: ./back-end
-    container_name: back-end
+    volumes:
+      - ./back-end/:/app
     ports:
       - 8080:3000
-    links:
-      - db
     env_file:
       - ./back-end/.env
+    links:
+      - db
+    command: ["npm", "run", "dev"]
   front-end:
     build: ./front-end
-    container_name: front-end
-    ports:
-      - 3000:3000
-    links:
-      - back-end
     restart: unless-stopped
     ports:
       - 1234:1234
+    volumes:
+      - ./front-end:/usr/src/app
+      - /app/node_modules
     links:
       - back-end
+    command: npm start
+    tty: true
+    stdin_open: true

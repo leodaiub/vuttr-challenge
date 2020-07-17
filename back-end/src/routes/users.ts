@@ -4,7 +4,7 @@ import UserController from '../controller/UserController';
 const router = Router();
 
 // Get all users
-router.get('/', UserController.index);
+router.get('/users', UserController.index);
 
 // Get one tool
 router.get(
