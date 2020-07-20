@@ -5,15 +5,16 @@ import { Tool } from '../entity/Tool';
 export default class ToolController {
   static index = async (request: Request, response: Response) => {
     const toolRepository = getRepository(Tool);
-    const tools = await toolRepository.find();
-
+    const skip: any = (request.query.skip as any) || 0;
+    const search: any = (request.query.search as any) || '';
+    const tools = await toolRepository.findAndCount({
+      order: { id: 'DESC' },
+      where: `title LIKE '%${search}%' OR description LIKE '%${search}%' OR link LIKE '%${search}%' OR array_to_string(tags, ', ') LIKE '%${search}%'`,
+      skip,
+      take: 2,
+    });
     response.send(tools);
   };
-
-  static async show(request: Request) {
-    const toolRepository = getRepository(Tool);
-    return toolRepository.findOne(request.params.id);
-  }
 
   static async store(request: Request, response: Response) {
     const toolRepository = getRepository(Tool);
@@ -22,14 +23,19 @@ export default class ToolController {
     response.send(tool);
   }
 
-  static async update(request: Request) {
+  static async update(request: Request, response: Response) {
     const toolRepository = getRepository(Tool);
-    return toolRepository.save(request.body);
+    const toolToUpdate = await toolRepository.findOne(request.params.id);
+    const tool = toolRepository.merge(toolToUpdate, request.body);
+    await toolRepository.save(tool);
+    response.send(tool);
   }
 
-  static async delete(request: Request) {
+  static async delete(request: Request, response: Response) {
     const toolRepository = getRepository(Tool);
-    const userToRemove = await toolRepository.findOne(request.params.id);
-    await toolRepository.remove(userToRemove);
+    const toolToRemove = await toolRepository.findOne(request.params.id);
+    const tool = await toolRepository.remove(toolToRemove);
+    tool.id = parseInt(request.params.id, 10);
+    response.send(tool);
   }
 }
