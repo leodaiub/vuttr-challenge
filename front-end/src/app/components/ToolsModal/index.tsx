@@ -83,21 +83,27 @@ export const ToolsModal = (props: Props) => {
       description: props.tool.description,
       tags: props.tool.tags || [],
     });
-    console.log(props.tool);
   }, [props.tool]);
 
   const handleSubmit = () => {
     if (props.title === 'Edit')
       props.editTool({ id: props.tool.id, data: formState });
     else props.createTool(formState);
-    if (!props.loading && !props.error) props.handleCloseModal();
-    setFormState({
-      id: 0,
-      title: '',
-      link: '',
-      description: '',
-      tags: [],
-    });
+
+    setTimeout(() => {
+      console.log(props.loading);
+      if (!props.loading) {
+        props.handleCloseModal();
+      }
+
+      setFormState({
+        id: 0,
+        title: '',
+        link: '',
+        description: '',
+        tags: [],
+      });
+    }, 2000);
   };
 
   return (
@@ -195,7 +201,7 @@ export const ToolsModal = (props: Props) => {
                 variant="contained"
                 color="secondary"
               >
-                {props.loading ? <CircularProgress /> : props.title}
+                {props.loading ? <CircularProgress size="2em" /> : props.title}
               </Button>
             </Box>
           </Box>

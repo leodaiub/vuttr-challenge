@@ -159,6 +159,8 @@ export const Tools = (props: Props) => {
           />
         </Box>
         <ToolsModal
+          error={tools.error}
+          loading={tools.loading}
           tool={modalTool}
           title={modalTitle}
           modalOpen={modalOpen}

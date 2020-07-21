@@ -43,6 +43,8 @@ export const Auth = memo((props: Props) => {
       </Helmet>
       <div>{t('')}</div>
       <AuthModal
+        error={auth.error}
+        loading={auth.loading}
         setModalTitle={props.setModalTitle}
         title={props.modalTitle}
         modalOpen={props.modalOpen}
