@@ -33,7 +33,5 @@ jobs:
       working-directory: front-end
     - run: npm run lint
       working-directory: front-end
-    - run: npm run prettify
-      working-directory: front-end
 #    - run: npm test
 #      working-directory: front-end
