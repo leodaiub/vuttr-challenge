@@ -7,20 +7,20 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class Tool {
+export default class Tool {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: false })
+  @Column({ nullable: false, collation: 'UTF8_GENERAL_CI' })
   title: string;
 
-  @Column({ nullable: false })
+  @Column({ nullable: false, collation: 'UTF8_GENERAL_CI' })
   link: string;
 
-  @Column({ nullable: false })
+  @Column({ nullable: false, collation: 'UTF8_GENERAL_CI' })
   description: string;
 
-  @Column({ array: true, nullable: false })
+  @Column({ array: true, nullable: false, collation: 'UTF8_GENERAL_CI' })
   tags: string;
 
   @Column()

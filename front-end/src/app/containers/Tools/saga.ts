@@ -8,7 +8,7 @@ export function* loadTools({ payload }) {
       api.get,
       `tools?skip=${
         parseInt(payload.page, 10) === 1 || !payload.page ? 0 : payload.page
-      }&search=${payload.search}`,
+      }&search=${payload.search}&searchTagsOnly=${payload.searchTagsOnly}`,
     );
     yield put(actions.toolsLoaded(tools.data));
   } catch {
