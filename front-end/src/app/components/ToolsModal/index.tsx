@@ -119,7 +119,7 @@ export const ToolsModal = (props: Props) => {
             alignItems="center"
             justifyContent="space-between"
           >
-            <Typography>{props.title} TOOL</Typography>
+            <Typography>{props.title} Tool</Typography>
             <IconButton onClick={props.handleCloseModal}>
               <Close />
             </IconButton>
@@ -193,7 +193,7 @@ export const ToolsModal = (props: Props) => {
                 onClick={handleSubmit}
                 fullWidth
                 variant="contained"
-                color="primary"
+                color="secondary"
               >
                 {props.loading ? <CircularProgress /> : props.title}
               </Button>
