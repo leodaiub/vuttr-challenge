@@ -1,3 +1,6 @@
+import { ToolsState } from 'app/containers/Tools/types';
+import { AuthState } from 'app/containers/Auth/types';
+import { ThemeState } from 'theme/types';
 // [IMPORT NEW CONTAINERSTATE ABOVE] < Needed for generating containers seamlessly
 
 /* 
@@ -5,5 +8,8 @@
   You have to declare them here manually
 */
 export interface RootState {
+  theme?: ThemeState;
+  tools?: ToolsState;
+  auth?: AuthState;
   // [INSERT NEW REDUCER KEY ABOVE] < Needed for generating containers seamlessly
 }
