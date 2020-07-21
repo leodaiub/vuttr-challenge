@@ -15,6 +15,7 @@ import {
   IconButton,
   TextField,
   CircularProgress,
+  Link,
 } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
 
@@ -130,7 +131,12 @@ export function AuthModal(props: Props) {
               }
             />
             <Box width="100%" marginTop={1}>
-              <Button onClick={handleSubmit} fullWidth variant="contained">
+              <Button
+                onClick={handleSubmit}
+                fullWidth
+                variant="contained"
+                color="secondary"
+              >
                 {props.loading ? <CircularProgress /> : props.title}
               </Button>
             </Box>
@@ -146,7 +152,7 @@ export function AuthModal(props: Props) {
                 }
               }}
             >
-              <Typography variant="body2">
+              <Typography color="secondary" component={Link} variant="body1">
                 {props.title === 'LOGIN'
                   ? 'Dont have an account? Register.'
                   : 'Already have an account? Login.'}

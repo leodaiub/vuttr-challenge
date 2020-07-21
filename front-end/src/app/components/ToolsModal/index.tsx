@@ -189,12 +189,7 @@ export const ToolsModal = (props: Props) => {
               }
             />
             <Box width="100%" marginTop={1}>
-              <Button
-                onClick={handleSubmit}
-                fullWidth
-                variant="contained"
-                color="primary"
-              >
+              <Button onClick={handleSubmit} fullWidth variant="contained">
                 {props.loading ? <CircularProgress /> : props.title}
               </Button>
             </Box>

@@ -3,12 +3,12 @@ import { colors } from '@material-ui/core';
 export default {
   primary: {
     dark: colors.grey[200],
-    main: '#88EDC4',
+    main: '#244AA8',
     light: colors.grey[200],
   },
   secondary: {
     dark: colors.grey[200],
-    main: '#365DF0',
+    main: '#2BAFD8',
     light: colors.blue['A400'],
   },
   success: {
@@ -25,6 +25,7 @@ export default {
     dark: '#D89C3A',
     main: '#FFBB43',
     light: '#FFBB43',
+    contrastText: colors.grey[900],
   },
   error: {
     dark: '#CC4C4C',
@@ -32,11 +33,11 @@ export default {
     light: '#FCAEAC',
   },
   text: {
-    // primary: colors.grey[200],
+    // primary: colors.grey[900],
     // secondary: colors.grey[200],
     link: colors.green[600],
   },
-
+  link: colors.green[600],
   icon: '#170C3A',
   divider: colors.grey[200],
 };

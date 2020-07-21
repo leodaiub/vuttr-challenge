@@ -3,12 +3,11 @@
  * Tool
  *
  */
-import React, { memo } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import { Button, Typography, makeStyles, Box, Link } from '@material-ui/core';
-import { Close } from '@material-ui/icons';
+import { Typography, makeStyles, Box, Link } from '@material-ui/core';
 import { Dialog } from '../Dialog';
 
 interface Props {

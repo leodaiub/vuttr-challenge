@@ -118,10 +118,9 @@ export const Menu = memo((props: Props) => {
               aria-controls="simple-menu"
               aria-haspopup="true"
               onClick={handleClick}
-              color="secondary"
             >
               <Box marginRight={1}>
-                <TranslateIcon fontSize="small" color="secondary" />
+                <TranslateIcon fontSize="small" />
               </Box>
               <Typography variant="button">
                 {i18n.language === 'en_US'

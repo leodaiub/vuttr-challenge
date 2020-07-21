@@ -6,5 +6,5 @@ export default {
     // lineHeight: '18px',
     font: 'Source Sans Pro',
   },
-  fontFamily: ['Source Sans Pro'].join(','),
+  fontFamily: ['Source Sans Pro', 'Sans Serif'].join(','),
 };
