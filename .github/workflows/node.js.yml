@@ -22,12 +22,14 @@ jobs:
         node-version: [10.x, 12.x, 14.x]
 
     steps:
-    - working-directory: front-end
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm install
+      working-directory: front-end
     - run: npm run build --if-present
+      working-directory: front-end
     - run: npm test
+      working-directory: front-end
