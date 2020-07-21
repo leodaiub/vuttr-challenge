@@ -9,7 +9,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import { Box } from '@material-ui/core';
+import { Box, Link } from '@material-ui/core';
 import { Brightness7, Brightness4 } from '@material-ui/icons';
 import { changeTheme, selectThemeKey } from 'theme/slice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,7 +18,7 @@ import { LanguageKey } from 'locales/i18n';
 import Menus from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import TranslateIcon from '@material-ui/icons/Translate';
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 interface Props {
   handleOpenModal: any;
@@ -68,8 +68,8 @@ export const Menu = memo((props: Props) => {
           justifyContent="space-between"
         >
           <Box>
-            <Link to="/">
-              <Typography variant="h6" color="secondary">
+            <Link component={RouterLink} to="/" color="secondary">
+              <Typography color="secondary" variant="h5">
                 VUTTR
               </Typography>
             </Link>
@@ -81,8 +81,9 @@ export const Menu = memo((props: Props) => {
                   aria-controls="simple-menu"
                   aria-haspopup="true"
                   onClick={handleClick1}
+                  color="secondary"
                 >
-                  <Typography color="secondary" variant="button">
+                  <Typography variant="button">
                     Olá, {props.user.username}
                   </Typography>
                 </Button>
@@ -107,23 +108,22 @@ export const Menu = memo((props: Props) => {
                 </Menus>
               </>
             ) : (
-              <Button color="secondary" onClick={props.handleOpenModal}>
-                Sign In
-              </Button>
+              <Button onClick={props.handleOpenModal}>Sign In</Button>
             )}
 
-            <Button color="secondary" onClick={() => handleThemeChange()}>
+            <Button onClick={() => handleThemeChange()}>
               {theme === 'light' ? <Brightness7 /> : <Brightness4 />}
             </Button>
             <Button
               aria-controls="simple-menu"
               aria-haspopup="true"
               onClick={handleClick}
+              color="secondary"
             >
               <Box marginRight={1}>
-                <TranslateIcon color="secondary" fontSize="small" />
+                <TranslateIcon fontSize="small" color="secondary" />
               </Box>
-              <Typography color="secondary" variant="button">
+              <Typography variant="button">
                 {i18n.language === 'en_US'
                   ? 'English'
                   : i18n.language === 'PT_BR'

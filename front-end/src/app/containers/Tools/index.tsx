@@ -44,15 +44,17 @@ export const Tools = (props: Props) => {
   let query = useQuery();
   const page = query.get('page') || 0;
   const search = query.get('search') || ' ';
+  const searchTagsOnly = query.get('searchTagsOnly') || false;
   useEffect(() => {
     dispatch(
       actions.loadTools({
         page: page,
         search: search,
+        searchTagsOnly,
       }),
     );
     dispatch(actionsAuth.checkAuth());
-  }, [search, page, dispatch]);
+  }, [searchTagsOnly, search, page, dispatch]);
 
   const [modalOpen, setModalOpen] = React.useState(false);
   const [modalTool, setModalTool] = React.useState({});
@@ -83,8 +85,8 @@ export const Tools = (props: Props) => {
     props.history.push({
       location: '/',
       search: `?page=${query.get('page') || 1}&search=${
-      search: `?page=${query.get('page') || 1}&search=${e.target.search.value}`,
-      }&searchTagsOnly=${e.target.searchTagsOnly.value}`,
+        e.target.search.value
+      }&searchTagsOnly=${e.target.searchTagsOnly.checked}`,
     });
     dispatch(actions.loadTools({ search: e.target.search.value }));
   };
@@ -112,6 +114,8 @@ export const Tools = (props: Props) => {
         </Box>
         <Box width="100%">
           <ToolsHeader
+            searchQuery={search}
+            searchTagsOnly={searchTagsOnly === 'true'}
             setModalTitle={setModalTitle}
             handleOpenModal={handleOpenModal}
             handleCloseModal={handleCloseModal}
@@ -119,6 +123,8 @@ export const Tools = (props: Props) => {
           ></ToolsHeader>
           {tools?.tools[0]?.slice(0, 2).map(tool => (
             <Tool
+              searchTagsOnly={searchTagsOnly === 'true'}
+              searchQuery={search}
               setModalTitle={setModalTitle}
               setModalTool={setModalTool}
               key={tool.id}
@@ -132,14 +138,16 @@ export const Tools = (props: Props) => {
 
         <Box display="flex" justifyContent="center" m={2}>
           <Pagination
-            size="large"
             color="secondary"
+            size="large"
             count={Math.ceil(tools?.tools[1] / 2)}
             page={parseInt(query.get('page') as any, 10) || 1}
             onChange={(evt, value) => {
               props.history.push({
                 location: '/',
-                search: `?page=${value}&search=${query.get('search') || ' '}`,
+                search: `?page=${value}&search=${
+                  query.get('search') || ' '
+                }&searchTagsOnly=${searchTagsOnly}`,
               });
               dispatch(
                 actions.loadTools({
