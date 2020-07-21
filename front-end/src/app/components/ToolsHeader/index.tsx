@@ -83,7 +83,7 @@ export function ToolsHeader(props: Props) {
         variant="contained"
         onClick={() => {
           props.handleOpenModal();
-          props.setModalTitle('CREATE');
+          props.setModalTitle('Create');
         }}
         color="secondary"
       >
