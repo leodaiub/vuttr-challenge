@@ -1,33 +1,6 @@
-/**
- * @swagger
- * tags:
- *   name: Users
- *   description: User management
- */
-
-/**
- * @swagger
- * path:
- *  /users/:
- *    post:
- *      summary: Create a new user
- *      tags: [Users]
- *      requestBody:
- *        required: true
- *        content:
- *          application/json:
- *            schema:
- *              $ref: '#/components/schemas/User'
- *      responses:
- *        "200":
- *          description: A user schema
- *          content:
- *            application/json:
- *              schema:
- *                $ref: '#/components/schemas/User'
- */
 import { Router } from 'express';
 import ToolController from '../controller/ToolController';
+import checkJwt from '../middlewares/checkJwt';
 
 const router = Router();
 
@@ -38,9 +11,9 @@ router.get('/', ToolController.index);
 router.post('/', ToolController.store);
 
 // Edit one tool
-router.put('/:id([0-9]+)', ToolController.update);
+router.put('/:id([0-9]+)', [checkJwt], ToolController.update);
 
 // Delete one tool
-router.delete('/:id([0-9]+)', ToolController.delete);
+router.delete('/:id([0-9]+)', [checkJwt], ToolController.delete);
 
 export default router;

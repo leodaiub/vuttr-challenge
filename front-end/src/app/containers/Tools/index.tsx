@@ -13,7 +13,6 @@ import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 import { reducer, sliceKey, actions } from './slice';
 import { selectTools } from './selectors';
 import { toolsSaga } from './saga';
-
 import Typography from '@material-ui/core/Typography';
 
 import { Container, Box } from '@material-ui/core';
@@ -23,6 +22,9 @@ import Pagination from '@material-ui/lab/Pagination';
 import { useLocation } from 'react-router-dom';
 import { ToolsHeader } from 'app/components/ToolsHeader';
 import { ToolsModal } from 'app/components/ToolsModal';
+import { Auth } from '../Auth';
+import { selectAuth } from '../Auth/selectors';
+import { actions as actionsAuth } from '../Auth/slice';
 interface Props {
   history: any;
 }
@@ -31,6 +33,7 @@ export const Tools = (props: Props) => {
   useInjectReducer({ key: sliceKey, reducer: reducer });
   useInjectSaga({ key: sliceKey, saga: toolsSaga });
   const tools = useSelector(selectTools, shallowEqual);
+  const auth = useSelector(selectAuth);
 
   const dispatch = useDispatch();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -48,6 +51,7 @@ export const Tools = (props: Props) => {
         search: search,
       }),
     );
+    dispatch(actionsAuth.checkAuth());
   }, [search, page, dispatch]);
 
   const [modalOpen, setModalOpen] = React.useState(false);
@@ -63,12 +67,24 @@ export const Tools = (props: Props) => {
     setModalTitle('');
   };
 
+  const [authModalOpen, setAuthModalOpen] = React.useState(false);
+  const [authModalTitle, setAuthModalTitle] = React.useState('LOGIN');
+  const handleOpenAuthModal = () => {
+    setAuthModalOpen(true);
+  };
+
+  const handleCloseAuthModal = () => {
+    setAuthModalOpen(false);
+  };
+
   const handleSearch = e => {
     e.preventDefault();
 
     props.history.push({
       location: '/',
+      search: `?page=${query.get('page') || 1}&search=${
       search: `?page=${query.get('page') || 1}&search=${e.target.search.value}`,
+      }&searchTagsOnly=${e.target.searchTagsOnly.value}`,
     });
     dispatch(actions.loadTools({ search: e.target.search.value }));
   };
@@ -79,7 +95,12 @@ export const Tools = (props: Props) => {
         <title>Tools</title>
         <meta name="description" content="Description of Tools" />
       </Helmet>
-      <Menu />
+      <Menu
+        handleOpenModal={handleOpenAuthModal}
+        authenticated={auth.authenticated}
+        logout={() => dispatch(actionsAuth.logout())}
+        user={auth.user}
+      />
       <Container maxWidth="md">
         <Box m={2}>
           <Typography variant="h2" color="textSecondary">
@@ -137,6 +158,13 @@ export const Tools = (props: Props) => {
           handleCloseModal={handleCloseModal}
           createTool={data => dispatch(actions.createTool(data))}
           editTool={data => dispatch(actions.editTool(data))}
+        />
+        <Auth
+          setModalTitle={setAuthModalTitle}
+          modalTitle={authModalTitle}
+          modalOpen={authModalOpen}
+          handleOpenModal={handleOpenAuthModal}
+          handleCloseModal={handleCloseAuthModal}
         />
       </Container>
       <div></div>

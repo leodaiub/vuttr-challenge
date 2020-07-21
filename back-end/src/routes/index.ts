@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import users from './users';
+import auth from './auth';
 import tools from './tools';
 
 const routes = Router();
 routes.use('/tools', tools);
-routes.use('/users', users);
+routes.use('/auth', auth);
 
 export default routes;

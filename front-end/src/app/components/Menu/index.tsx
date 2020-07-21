@@ -20,7 +20,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 import TranslateIcon from '@material-ui/icons/Translate';
 import { Link } from 'react-router-dom';
 
-interface Props {}
+interface Props {
+  handleOpenModal: any;
+  authenticated: boolean;
+  user: any;
+  logout: any;
+}
 export const Menu = memo((props: Props) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { t, i18n } = useTranslation();
@@ -39,6 +44,16 @@ export const Menu = memo((props: Props) => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const [anchorEl1, setAnchorEl1] = React.useState<null | HTMLElement>(null);
+
+  const handleClick1 = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl1(event.currentTarget);
+  };
+
+  const handleClose1 = () => {
+    setAnchorEl1(null);
   };
   const handleLanguageChange = (data: LanguageKey) => {
     i18n.changeLanguage(data);
@@ -60,7 +75,43 @@ export const Menu = memo((props: Props) => {
             </Link>
           </Box>
           <Box>
-            <Button color="secondary">Sign In</Button>
+            {props.authenticated ? (
+              <>
+                <Button
+                  aria-controls="simple-menu"
+                  aria-haspopup="true"
+                  onClick={handleClick1}
+                >
+                  <Typography color="secondary" variant="button">
+                    Olá, {props.user.username}
+                  </Typography>
+                </Button>
+                <Menus
+                  id="simple-menu"
+                  anchorEl={anchorEl1}
+                  keepMounted
+                  getContentAnchorEl={null}
+                  open={Boolean(anchorEl1)}
+                  onClose={handleClose1}
+                  anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                  transformOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                >
+                  <MenuItem
+                    onClick={() => {
+                      props.logout();
+                      handleClose1();
+                    }}
+                  >
+                    Sign out
+                  </MenuItem>
+                </Menus>
+              </>
+            ) : (
+              <Button color="secondary" onClick={props.handleOpenModal}>
+                Sign In
+              </Button>
+            )}
+
             <Button color="secondary" onClick={() => handleThemeChange()}>
               {theme === 'light' ? <Brightness7 /> : <Brightness4 />}
             </Button>
