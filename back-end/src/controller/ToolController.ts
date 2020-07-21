@@ -1,15 +1,22 @@
 import { getRepository } from 'typeorm';
 import { Request, Response } from 'express';
-import { Tool } from '../entity/Tool';
+import Tool from '../entity/Tool';
 
 export default class ToolController {
   static index = async (request: Request, response: Response) => {
     const toolRepository = getRepository(Tool);
     const skip: any = (request.query.skip as any) || 0;
     const search: any = (request.query.search as any) || '';
+    const searchTagsOnly: any = request.query.searchTagsOnly === 'true';
+
     const tools = await toolRepository.findAndCount({
       order: { id: 'DESC' },
-      where: `title LIKE '%${search}%' OR description LIKE '%${search}%' OR link LIKE '%${search}%' OR array_to_string(tags, ', ') LIKE '%${search}%'`,
+      where: searchTagsOnly
+        ? `array_to_string(tags, ', ') LIKE '%${search}%'`
+        : `title LIKE ' % ${search} % '
+            OR description LIKE '%${search}%' 
+            OR link LIKE '%${search}%' 
+            OR array_to_string(tags, ', ') LIKE '%${search}%'`,
       skip,
       take: 2,
     });
