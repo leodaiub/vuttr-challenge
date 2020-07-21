@@ -16,6 +16,9 @@ import { configureAppStore } from 'store/configureStore';
 
 import './locales/i18n';
 import { ThemeProvider } from 'theme/ThemeProvider';
+import { ToastContainer } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const store = configureAppStore();
 const MOUNT_NODE = document.getElementById('root') as HTMLElement;
@@ -28,7 +31,7 @@ const ConnectedApp = ({ Component }: Props) => {
     <Provider store={store}>
       <HelmetProvider>
         <React.StrictMode>
-          <CssBaseline />
+          <CssBaseline /> <ToastContainer />{' '}
           <ThemeProvider>
             <Component />
           </ThemeProvider>
