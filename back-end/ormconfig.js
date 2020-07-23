@@ -3,12 +3,12 @@ module.exports = {
   url: process.env.DATABASE_URL,
   synchronize: true,
   logging: false,
-  entities: ['src/entity/**/*.ts', 'diist/entity/**/*.ts'],
-  migrations: ['src/migration/**/*.ts', 'dist/migration/**/*.ts'],
-  subscribers: ['src/subscriber/**/*.ts', 'dist/subscriber/**/*.ts'],
+  entities: ['build/entity/**/*.js'],
+  migrations: ['build/migration/**/*.ts'],
+  subscribers: ['build/subscriber/**/*.ts'],
   cli: {
-    entitiesDir: 'src/entity',
-    migrationsDir: 'src/migration',
-    subscribersDir: 'src/subscriber',
+    entitiesDir: 'build/entity',
+    migrationsDir: 'build/migration',
+    subscribersDir: 'build/subscriber',
   },
 };
