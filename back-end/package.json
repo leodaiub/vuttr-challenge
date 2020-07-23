@@ -37,7 +37,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "ts-node-dev src/index.ts",
-    "start": "ts-node src/index.ts",
+    "start": "node build/index.js",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js",
     "test": "cross-env NODE_ENV=test jest"
   }
