@@ -1,6 +1,9 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from 'utils/@reduxjs/toolkit';
 import { ContainerState } from './types';
+import { toast } from 'react-toastify';
+import { i18n, translations } from 'locales/i18n';
+import i18next from 'i18next';
 
 // The initial state of the Tools container
 export const initialState: ContainerState = {
@@ -17,6 +20,7 @@ const toolsSlice = createSlice({
       state.loading = true;
     },
     toolsError(state, action: PayloadAction<any>) {
+      toast.error(i18next.t('Whoops, something went wrong...'));
       state.error = action.payload;
       state.loading = false;
     },
@@ -34,6 +38,7 @@ const toolsSlice = createSlice({
       state.loading = false;
     },
     toolCreateError(state, action: PayloadAction<any>) {
+      toast.error(i18next.t('Whoops, something went wrong...'));
       state.error = action.payload;
       state.loading = false;
     },
@@ -49,6 +54,7 @@ const toolsSlice = createSlice({
       state.loading = false;
     },
     toolEditError(state, action: PayloadAction<any>) {
+      toast.error(i18next.t('Whoops, something went wrong...'));
       state.error = action.payload;
       state.loading = false;
     },

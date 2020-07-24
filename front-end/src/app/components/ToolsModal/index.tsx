@@ -91,8 +91,7 @@ export const ToolsModal = (props: Props) => {
     else props.createTool(formState);
 
     setTimeout(() => {
-      console.log(props.loading);
-      if (!props.loading) {
+      if (!props.loading && props.error === {}) {
         props.handleCloseModal();
       }
 
@@ -125,7 +124,7 @@ export const ToolsModal = (props: Props) => {
             alignItems="center"
             justifyContent="space-between"
           >
-            <Typography>{props.title} Tool</Typography>
+            <Typography>{t(`${props.title}`)} Tool</Typography>
             <IconButton onClick={props.handleCloseModal}>
               <Close />
             </IconButton>
@@ -139,7 +138,7 @@ export const ToolsModal = (props: Props) => {
           >
             <TextField
               id="title"
-              label="Título"
+              label={t('Title')}
               variant="filled"
               margin="dense"
               fullWidth
@@ -150,7 +149,7 @@ export const ToolsModal = (props: Props) => {
             />
             <TextField
               id="link"
-              label="Link"
+              label={t('Link')}
               variant="filled"
               margin="dense"
               fullWidth
@@ -161,7 +160,7 @@ export const ToolsModal = (props: Props) => {
             />
             <TextField
               id="description"
-              label="Descriçao"
+              label={t('Description')}
               variant="filled"
               margin="dense"
               fullWidth
@@ -177,7 +176,7 @@ export const ToolsModal = (props: Props) => {
             <ChipInput
               id="tags"
               variant="filled"
-              label="Tags"
+              label={t('Tags')}
               fullWidth
               margin="dense"
               value={formState.tags || props.tool?.tags || []}
@@ -201,7 +200,11 @@ export const ToolsModal = (props: Props) => {
                 variant="contained"
                 color="secondary"
               >
-                {props.loading ? <CircularProgress size="2em" /> : props.title}
+                {props.loading ? (
+                  <CircularProgress size="2em" />
+                ) : (
+                  t(`${props.title}`)
+                )}
               </Button>
             </Box>
           </Box>

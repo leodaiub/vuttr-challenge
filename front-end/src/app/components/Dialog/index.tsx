@@ -40,7 +40,7 @@ export function Dialog(props: Props) {
         }}
         color="secondary"
       >
-        <Close fontSize="small" /> remove
+        <Close fontSize="small" /> {t('Remove')}
       </Button>
 
       <Dialogs
@@ -52,11 +52,11 @@ export function Dialog(props: Props) {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          Are you sure you want to delete this tool?
+          {t('Are you sure you want to delete this tool?')}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            This action is irreversible.
+            {t('This action is irreversible.')}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -68,7 +68,7 @@ export function Dialog(props: Props) {
                 props.deleteTool();
               }}
             >
-              YES!
+              {t('Yes')}
             </Button>
           </Box>
           <Box bgcolor="info.main" color="text.primary" clone>
@@ -78,7 +78,7 @@ export function Dialog(props: Props) {
                 handleClose(e);
               }}
             >
-              NO!
+              {t('No')}
             </Button>
           </Box>
         </DialogActions>

@@ -1,6 +1,8 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from 'utils/@reduxjs/toolkit';
 import { ContainerState } from './types';
+import { toast } from 'react-toastify';
+import i18next from 'i18next';
 
 // The initial state of the Auth container
 export const initialState: ContainerState = {
@@ -46,7 +48,8 @@ const authSlice = createSlice({
     loading(state, action: PayloadAction<any>) {
       state.loading = true;
     },
-    error(state, action: PayloadAction<any>) {
+    errorRegistering(state, action: PayloadAction<any>) {
+      toast.error(i18next.t('Whoops, something went wrong...'));
       state.error = action.payload;
       state.loading = false;
     },

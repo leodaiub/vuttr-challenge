@@ -8,13 +8,17 @@ export function* login({ payload }) {
     localStorage.setItem('token', res.data.token);
     localStorage.setItem('user', JSON.stringify(res.data.user));
     yield put(actions.loggedIn(res.data));
-  } catch (error) {}
+  } catch (e) {
+    yield put(actions.errorRegistering(e));
+  }
 }
 export function* register({ payload }) {
   try {
     const res = yield call(api.post, '/auth/register', payload);
     yield put(actions.registered(res.data));
-  } catch (error) {}
+  } catch (e) {
+    yield put(actions.errorRegistering(e));
+  }
 }
 
 export function* authSaga() {

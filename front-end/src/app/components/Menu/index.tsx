@@ -84,7 +84,7 @@ export const Menu = memo((props: Props) => {
                   color="secondary"
                 >
                   <Typography variant="button">
-                    Olá, {props.user.username}
+                    {t('Hello,')} {props.user.username}
                   </Typography>
                 </Button>
                 <Menus
@@ -103,12 +103,12 @@ export const Menu = memo((props: Props) => {
                       handleClose1();
                     }}
                   >
-                    Sign out
+                    {t('Sign out')}
                   </MenuItem>
                 </Menus>
               </>
             ) : (
-              <Button onClick={props.handleOpenModal}>Sign In</Button>
+              <Button onClick={props.handleOpenModal}>{t('Sign In')}</Button>
             )}
 
             <Button onClick={() => handleThemeChange()}>
@@ -126,8 +126,8 @@ export const Menu = memo((props: Props) => {
                 {i18n.language === 'en_US'
                   ? 'English'
                   : i18n.language === 'PT_BR'
-                  ? 'Portuguese'
-                  : 'Spanish'}
+                  ? 'Português'
+                  : 'Español'}
               </Typography>
             </Button>
             <Menus

@@ -11,32 +11,32 @@ export function* loadTools({ payload }) {
       }&search=${payload.search}&searchTagsOnly=${payload.searchTagsOnly}`,
     );
     yield put(actions.toolsLoaded(tools.data));
-  } catch {
-    yield put(actions.toolsError);
+  } catch (e) {
+    yield put(actions.toolsError(e));
   }
 }
 export function* createTool({ payload }) {
   try {
     const tools = yield call(api.post, 'tools', payload);
     yield put(actions.toolCreated(tools.data));
-  } catch {
-    yield put(actions.toolCreateError);
+  } catch (e) {
+    yield put(actions.toolCreateError(e));
   }
 }
 export function* editTool({ payload }) {
   try {
     const tools = yield call(api.put, `tools/${payload.id}`, payload.data);
     yield put(actions.toolEdited(tools.data));
-  } catch {
-    yield put(actions.toolsError);
+  } catch (e) {
+    yield put(actions.toolsError(e));
   }
 }
 export function* deleteTool({ payload }) {
   try {
     const tools = yield call(api.delete, `tools/${payload}`);
     yield put(actions.toolDeleted(tools.data));
-  } catch {
-    yield put(actions.toolsError);
+  } catch (e) {
+    yield put(actions.toolDeleteError(e));
   }
 }
 export function* toolsSaga() {

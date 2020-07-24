@@ -66,9 +66,11 @@ export function AuthModal(props: Props) {
     username: '',
     password: '',
   });
-  const handleSubmit = () => {
-    if (props.title === 'LOGIN') props.login(formState);
-    else props.register(formState);
+  const handleSubmit = async () => {
+    if (props.title === 'LOGIN') await props.login(formState);
+    else await props.register(formState);
+
+    console.log(props.error, props.loading);
     if (!props.loading && !props.error) props.handleCloseModal();
     setFormState({
       username: '',
@@ -94,7 +96,7 @@ export function AuthModal(props: Props) {
             alignItems="center"
             justifyContent="space-between"
           >
-            <Typography>{props.title}</Typography>
+            <Typography>{t(`${props.title}`)}</Typography>
             <IconButton onClick={props.handleCloseModal}>
               <Close />
             </IconButton>
@@ -108,7 +110,7 @@ export function AuthModal(props: Props) {
           >
             <TextField
               id="username"
-              label="Username"
+              label={t('Username')}
               type="username"
               variant="filled"
               margin="dense"
@@ -121,7 +123,7 @@ export function AuthModal(props: Props) {
             <TextField
               id="password"
               type="password"
-              label="Password"
+              label={t('Password')}
               variant="filled"
               margin="dense"
               fullWidth
@@ -137,7 +139,7 @@ export function AuthModal(props: Props) {
                 variant="contained"
                 color="secondary"
               >
-                {props.loading ? <CircularProgress /> : props.title}
+                {props.loading ? <CircularProgress /> : t(`${props.title}`)}
               </Button>
             </Box>
             <Box
@@ -154,8 +156,8 @@ export function AuthModal(props: Props) {
             >
               <Typography color="secondary" component={Link} variant="body1">
                 {props.title === 'LOGIN'
-                  ? 'Dont have an account? Register.'
-                  : 'Already have an account? Login.'}
+                  ? t('Dont have an account? Register.')
+                  : t('Already have an account? Login.')}
               </Typography>
             </Box>
           </Box>

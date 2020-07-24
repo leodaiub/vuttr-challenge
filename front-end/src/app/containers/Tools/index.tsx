@@ -42,9 +42,9 @@ export const Tools = (props: Props) => {
     return new URLSearchParams(useLocation().search);
   }
   let query = useQuery();
-  const page = query.get('page') || 0;
-  const search = query.get('search') || ' ';
-  const searchTagsOnly = query.get('searchTagsOnly') || false;
+  const page = query.get('p') || 0;
+  const search = query.get('s') || ' ';
+  const searchTagsOnly = query.get('byTags') || false;
   useEffect(() => {
     dispatch(
       actions.loadTools({
@@ -84,9 +84,9 @@ export const Tools = (props: Props) => {
 
     props.history.push({
       location: '/',
-      search: `?page=${query.get('page') || 1}&search=${
-        e.target.search.value
-      }&searchTagsOnly=${e.target.searchTagsOnly.checked}`,
+      search: `?p=${query.get('p') || 1}&s=${e.target.search.value}&byTags=${
+        e.target.searchTagsOnly.checked
+      }`,
     });
     dispatch(actions.loadTools({ search: e.target.search.value }));
   };
@@ -121,6 +121,18 @@ export const Tools = (props: Props) => {
             handleCloseModal={handleCloseModal}
             handleSearch={handleSearch}
           ></ToolsHeader>
+          {tools?.tools[0]?.length < 1 && (
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              m={4}
+            >
+              <Typography variant="h5">
+                {t('There is no tool yet, how about you add one?')}
+              </Typography>
+            </Box>
+          )}
           {tools?.tools[0]?.slice(0, 2).map(tool => (
             <Tool
               searchTagsOnly={searchTagsOnly === 'true'}
@@ -141,18 +153,18 @@ export const Tools = (props: Props) => {
             color="secondary"
             size="large"
             count={Math.ceil(tools?.tools[1] / 2)}
-            page={parseInt(query.get('page') as any, 10) || 1}
+            page={parseInt(query.get('p') as any, 10) || 1}
             onChange={(evt, value) => {
               props.history.push({
                 location: '/',
-                search: `?page=${value}&search=${
-                  query.get('search') || ' '
-                }&searchTagsOnly=${searchTagsOnly}`,
+                search: `?p=${value}&s=${
+                  query.get('s') || ' '
+                }&byTags=${searchTagsOnly}`,
               });
               dispatch(
                 actions.loadTools({
                   page: value > 1 ? value * 2 - 2 : 0,
-                  search: query.get('search') || ' ',
+                  search: query.get('s') || ' ',
                 }),
               );
             }}

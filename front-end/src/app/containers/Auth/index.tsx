@@ -37,10 +37,10 @@ export const Auth = memo((props: Props) => {
 
   return (
     <>
-      <Helmet>
+      {/* <Helmet>
         <title>Auth</title>
         <meta name="description" content="Description of Auth" />
-      </Helmet>
+      </Helmet> */}
       <div>{t('')}</div>
       <AuthModal
         error={auth.error}

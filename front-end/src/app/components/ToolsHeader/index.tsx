@@ -55,7 +55,7 @@ export function ToolsHeader(props: Props) {
         <Paper className={classes.root}>
           <InputBase
             className={classes.input}
-            placeholder="Search"
+            placeholder={t('Search')}
             inputProps={{ 'aria-label': 'search' }}
             name="search"
             defaultValue={props.searchQuery !== ' ' ? props.searchQuery : null}
@@ -75,7 +75,7 @@ export function ToolsHeader(props: Props) {
               name="searchTagsOnly"
             />
           }
-          label="Search tags only?"
+          label={t('Search tags only?')}
         />
       </Box>
 
@@ -89,7 +89,7 @@ export function ToolsHeader(props: Props) {
       >
         {' '}
         <Add />
-        Add
+        {t('Add')}
       </Button>
     </Box>
   );

@@ -3,16 +3,20 @@ import { initReactI18next } from 'react-i18next';
 
 import LanguageDetector from 'i18next-browser-languagedetector';
 
-import en from './en/translation.json';
+import PT_BR from './PT_BR/translation.json';
+import es from './es/translation.json';
 import { ConvertedToObjectType } from './types';
 
 const translationsJson = {
-  en: {
-    translation: en,
+  PT_BR: {
+    translation: PT_BR,
+  },
+  es: {
+    translation: es,
   },
 };
 
-export type TranslationResource = typeof en;
+export type TranslationResource = typeof es;
 export type LanguageKey = keyof TranslationResource;
 
 export const translations: ConvertedToObjectType<TranslationResource> = {} as any;
@@ -45,17 +49,19 @@ export const i18n = i18next
   .init(
     {
       resources: translationsJson,
-
-      fallbackLng: 'en',
+      // allow keys to be phrases having `:`, `.`
+      nsSeparator: false,
+      keySeparator: false,
+      fallbackLng: false,
       debug:
         process.env.NODE_ENV !== 'production' &&
         process.env.NODE_ENV !== 'test',
 
       interpolation: {
-        escapeValue: false, // not needed for react as it escapes by default
+        escapeValue: true, // not needed for react as it escapes by default
       },
     },
     () => {
-      convertLanguageJsonToObject(en, translations);
+      convertLanguageJsonToObject(es, translations);
     },
   );

@@ -2,8 +2,11 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import { P } from './P';
 import { Helmet } from 'react-helmet-async';
+import { useTranslation } from 'react-i18next';
 
 export function NotFoundPage() {
+  const { t } = useTranslation();
+
   return (
     <>
       <Helmet>
@@ -18,7 +21,7 @@ export function NotFoundPage() {
           </span>
           4
         </Title>
-        <P>Page not found.</P>
+        <P>{t('Page not found.')}</P>
       </Wrapper>
     </>
   );
