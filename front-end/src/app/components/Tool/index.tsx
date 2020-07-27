@@ -69,12 +69,16 @@ export const Tool = (props: Props) => {
                 key={tag}
                 marginRight={1}
                 bgcolor={
-                  tag.toLowerCase().includes(props.searchQuery.toLowerCase()) &&
+                  tag
+                    ?.toLowerCase()
+                    .includes(props.searchQuery?.toLowerCase()) &&
                   !!props.searchTagsOnly &&
                   'warning.main'
                 }
                 color={
-                  tag.toLowerCase().includes(props.searchQuery.toLowerCase()) &&
+                  tag
+                    .toLowerCase()
+                    .includes(props.searchQuery?.toLowerCase()) &&
                   !!props.searchTagsOnly &&
                   'warning.contrastText'
                 }

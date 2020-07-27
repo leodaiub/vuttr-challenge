@@ -14,6 +14,7 @@ import { reducer, sliceKey, actions } from './slice';
 import { selectTools } from './selectors';
 import { toolsSaga } from './saga';
 import Typography from '@material-ui/core/Typography';
+import * as QueryString from 'query-string';
 
 import { Container, Box } from '@material-ui/core';
 import { Menu } from 'app/components/Menu';
@@ -34,22 +35,21 @@ export const Tools = (props: Props) => {
   useInjectSaga({ key: sliceKey, saga: toolsSaga });
   const tools = useSelector(selectTools, shallowEqual);
   const auth = useSelector(selectAuth);
-
   const dispatch = useDispatch();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { t, i18n } = useTranslation();
-  function useQuery() {
-    return new URLSearchParams(useLocation().search);
-  }
-  let query = useQuery();
-  const page = query.get('p') || 0;
-  const search = query.get('s') || ' ';
-  const searchTagsOnly = query.get('byTags') || false;
+  const { t } = useTranslation();
+  const params = QueryString.parse(useLocation().search, {
+    parseBooleans: true,
+    parseNumbers: true,
+  });
+  const page: number = (params.p || 1) as number;
+  const search: string = (params.s || '') as string;
+  const searchTagsOnly: boolean = (params.byTags || false) as boolean;
+
   useEffect(() => {
     dispatch(
       actions.loadTools({
-        page: page,
-        search: search,
+        page,
+        search,
         searchTagsOnly,
       }),
     );
@@ -81,14 +81,18 @@ export const Tools = (props: Props) => {
 
   const handleSearch = e => {
     e.preventDefault();
-
+    if (!e.target.search.value) return;
     props.history.push({
       location: '/',
-      search: `?p=${query.get('p') || 1}&s=${e.target.search.value}&byTags=${
-        e.target.searchTagsOnly.checked
-      }`,
+      search: `?p=${page}&s=${e.target.search.value}&byTags=${e.target.searchTagsOnly.checked}`,
     });
-    dispatch(actions.loadTools({ search: e.target.search.value }));
+    dispatch(
+      actions.loadTools({
+        search: e.target.search.value,
+        page,
+        searchTagsOnly: e.target.searchTagsOnly.checked,
+      }),
+    );
   };
 
   return (
@@ -115,7 +119,7 @@ export const Tools = (props: Props) => {
         <Box width="100%">
           <ToolsHeader
             searchQuery={search}
-            searchTagsOnly={searchTagsOnly === 'true'}
+            searchTagsOnly={searchTagsOnly}
             setModalTitle={setModalTitle}
             handleOpenModal={handleOpenModal}
             handleCloseModal={handleCloseModal}
@@ -135,7 +139,7 @@ export const Tools = (props: Props) => {
           )}
           {tools?.tools[0]?.slice(0, 2).map(tool => (
             <Tool
-              searchTagsOnly={searchTagsOnly === 'true'}
+              searchTagsOnly={searchTagsOnly}
               searchQuery={search}
               setModalTitle={setModalTitle}
               setModalTool={setModalTool}
@@ -153,18 +157,17 @@ export const Tools = (props: Props) => {
             color="secondary"
             size="large"
             count={Math.ceil(tools?.tools[1] / 2)}
-            page={parseInt(query.get('p') as any, 10) || 1}
+            page={page && page > 0 ? page : 1}
             onChange={(evt, value) => {
               props.history.push({
                 location: '/',
-                search: `?p=${value}&s=${
-                  query.get('s') || ' '
-                }&byTags=${searchTagsOnly}`,
+                search: `?p=${value}&s=${search}&byTags=${searchTagsOnly}`,
               });
               dispatch(
                 actions.loadTools({
                   page: value > 1 ? value * 2 - 2 : 0,
-                  search: query.get('s') || ' ',
+                  search,
+                  searchTagsOnly,
                 }),
               );
             }}
@@ -189,7 +192,6 @@ export const Tools = (props: Props) => {
           handleCloseModal={handleCloseAuthModal}
         />
       </Container>
-      <div></div>
     </>
   );
 };

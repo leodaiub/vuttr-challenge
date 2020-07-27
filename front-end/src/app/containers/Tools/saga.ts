@@ -2,15 +2,13 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { actions } from './slice';
 import api from 'utils/api';
 
-export function* loadTools({ payload }) {
+export function* loadTools({
+  payload: { page = 0, search = ' ', searchTagsOnly = false },
+}) {
   try {
     const tools = yield call(
       api.get,
-      `tools?skip=${
-        parseInt(payload.page, 10) === 1 || !payload.page ? 0 : payload.page
-      }&search=${payload.search}&searchTagsOnly=${
-      }&search=${payload.search}&searchTagsOnly=${payload.searchTagsOnly}`,
-      }`,
+      `tools?skip=${page}&search=${search}&searchTagsOnly=${searchTagsOnly}`,
     );
     yield put(actions.toolsLoaded(tools.data));
   } catch {

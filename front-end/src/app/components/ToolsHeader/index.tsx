@@ -48,13 +48,13 @@ export function ToolsHeader(props: Props) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { t, i18n } = useTranslation();
   const classes = useStyles();
-
   return (
     <Box display="flex" justifyContent="space-between" marginBottom={2}>
       <Box display="flex" component="form" onSubmit={props.handleSearch}>
         <Paper className={classes.root}>
           <InputBase
             className={classes.input}
+            key={props.searchQuery}
             placeholder={t('Search')}
             inputProps={{ 'aria-label': 'search' }}
             name="search"
@@ -71,6 +71,7 @@ export function ToolsHeader(props: Props) {
         <FormControlLabel
           control={
             <Checkbox
+              key={props.searchQuery}
               defaultChecked={props.searchTagsOnly}
               name="searchTagsOnly"
             />

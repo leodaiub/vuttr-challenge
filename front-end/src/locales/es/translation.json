@@ -1,7 +1,7 @@
 {
   "Search tags only?": "Procurar apenas pelas tags?",
   "Add": "Adicionar",
-  "Hello,": "Olá,",
+  "Hello,": "Hola,",
   "Search": "Procurar",
   "Title": "Título",
   "Link": "Link",
@@ -22,5 +22,8 @@
   "REGISTER": "Cadastre-se",
   "Username": "Nome de usuário",
   "Password": "Senha",
-  "Whoops, something went wrong...": "Ops, algo deu errado..."
+  "Whoops, something went wrong...": "Ops, algo deu errado...",
+  "There is no tool yet, how about you add one?": "Não há nenhuma 'tool' ainda, que tal adicionar uma?",
+  "You have to be authenticated to perform this action": "Você precisa estar autenticado para realizar esta ação.",
+  "Press enter to insert tags": "Pressione enter para inserir tag"
 }
