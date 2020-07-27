@@ -2,7 +2,7 @@
 export interface ToolsState {
   tools: Array<any>;
   loading: boolean;
-  error: string;
+  error: boolean;
 }
 
 export type ContainerState = ToolsState;

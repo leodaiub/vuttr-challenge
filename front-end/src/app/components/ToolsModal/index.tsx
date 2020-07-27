@@ -91,9 +91,7 @@ export const ToolsModal = (props: Props) => {
     else props.createTool(formState);
 
     setTimeout(() => {
-      if (!props.loading && props.error === {}) {
-        props.handleCloseModal();
-      }
+      props.handleCloseModal();
 
       setFormState({
         id: 0,
@@ -102,7 +100,7 @@ export const ToolsModal = (props: Props) => {
         description: '',
         tags: [],
       });
-    }, 2000);
+    }, 1000);
   };
 
   return (
@@ -177,6 +175,7 @@ export const ToolsModal = (props: Props) => {
               id="tags"
               variant="filled"
               label={t('Tags')}
+              helperText={t('Press enter to insert tags')}
               fullWidth
               margin="dense"
               value={formState.tags || props.tool?.tags || []}
@@ -193,7 +192,7 @@ export const ToolsModal = (props: Props) => {
                 })
               }
             />
-            <Box width="100%" marginTop={1}>
+            <Box width="100%" marginTop={3}>
               <Button
                 onClick={handleSubmit}
                 fullWidth

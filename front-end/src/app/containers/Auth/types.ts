@@ -3,7 +3,7 @@ export interface AuthState {
   authenticated: boolean;
   user: any;
   loading: boolean;
-  error: string;
+  error: boolean;
 }
 
 export type ContainerState = AuthState;

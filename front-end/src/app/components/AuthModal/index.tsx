@@ -69,13 +69,13 @@ export function AuthModal(props: Props) {
   const handleSubmit = async () => {
     if (props.title === 'LOGIN') await props.login(formState);
     else await props.register(formState);
-
-    console.log(props.error, props.loading);
-    if (!props.loading && !props.error) props.handleCloseModal();
-    setFormState({
-      username: '',
-      password: '',
-    });
+    setTimeout(() => {
+      props.handleCloseModal();
+      setFormState({
+        username: '',
+        password: '',
+      });
+    }, 1000);
   };
   return (
     <div>

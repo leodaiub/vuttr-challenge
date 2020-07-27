@@ -1,5 +1,6 @@
 import { getRepository } from 'typeorm';
 import { Request, Response } from 'express';
+import { validateOrReject } from 'class-validator';
 import Tool from '../entity/Tool';
 
 export default class ToolController {
@@ -26,7 +27,12 @@ export default class ToolController {
   static async store(request: Request, response: Response) {
     const toolRepository = getRepository(Tool);
     const newTool = toolRepository.create(request.body);
-    const tool = await toolRepository.save(newTool);
+    validateOrReject(newTool).catch((errors) => {
+      response.status(400).send(errors);
+    });
+    const tool = await toolRepository
+      .save(newTool)
+      .catch((e) => response.status(400).send(e));
     response.send(tool);
   }
 
@@ -34,7 +40,10 @@ export default class ToolController {
     const toolRepository = getRepository(Tool);
     const toolToUpdate = await toolRepository.findOne(request.params.id);
     const tool = toolRepository.merge(toolToUpdate, request.body);
-    await toolRepository.save(tool);
+    validateOrReject(tool).catch((errors) => {
+      response.status(400).send(errors);
+    });
+    await toolRepository.save(tool).catch((e) => response.status(400).send(e));
     response.send(tool);
   }
 

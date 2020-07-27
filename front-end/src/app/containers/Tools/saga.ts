@@ -8,35 +8,37 @@ export function* loadTools({ payload }) {
       api.get,
       `tools?skip=${
         parseInt(payload.page, 10) === 1 || !payload.page ? 0 : payload.page
+      }&search=${payload.search}&searchTagsOnly=${
       }&search=${payload.search}&searchTagsOnly=${payload.searchTagsOnly}`,
+      }`,
     );
     yield put(actions.toolsLoaded(tools.data));
-  } catch (e) {
-    yield put(actions.toolsError(e));
+  } catch {
+    yield put(actions.toolsError());
   }
 }
 export function* createTool({ payload }) {
   try {
     const tools = yield call(api.post, 'tools', payload);
     yield put(actions.toolCreated(tools.data));
-  } catch (e) {
-    yield put(actions.toolCreateError(e));
+  } catch {
+    yield put(actions.toolCreateError());
   }
 }
 export function* editTool({ payload }) {
   try {
     const tools = yield call(api.put, `tools/${payload.id}`, payload.data);
     yield put(actions.toolEdited(tools.data));
-  } catch (e) {
-    yield put(actions.toolsError(e));
+  } catch {
+    yield put(actions.toolsError());
   }
 }
 export function* deleteTool({ payload }) {
   try {
     const tools = yield call(api.delete, `tools/${payload}`);
     yield put(actions.toolDeleted(tools.data));
-  } catch (e) {
-    yield put(actions.toolDeleteError(e));
+  } catch {
+    yield put(actions.toolDeleteError());
   }
 }
 export function* toolsSaga() {

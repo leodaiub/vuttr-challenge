@@ -9,7 +9,7 @@ export const initialState: ContainerState = {
   authenticated: false,
   user: {},
   loading: false,
-  error: '',
+  error: false,
 };
 
 const authSlice = createSlice({
@@ -48,9 +48,9 @@ const authSlice = createSlice({
     loading(state, action: PayloadAction<any>) {
       state.loading = true;
     },
-    errorRegistering(state, action: PayloadAction<any>) {
+    error(state) {
       toast.error(i18next.t('Whoops, something went wrong...'));
-      state.error = action.payload;
+      state.error = true;
       state.loading = false;
     },
   },

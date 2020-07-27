@@ -8,7 +8,7 @@ import i18next from 'i18next';
 export const initialState: ContainerState = {
   tools: [],
   loading: false,
-  error: '',
+  error: false,
 };
 
 const toolsSlice = createSlice({
@@ -18,9 +18,9 @@ const toolsSlice = createSlice({
     loadTools(state, action: PayloadAction<any>) {
       state.loading = true;
     },
-    toolsError(state, action: PayloadAction<any>) {
+    toolsError(state) {
       toast.error(i18next.t('Whoops, something went wrong...'));
-      state.error = action.payload;
+      state.error = true;
       state.loading = false;
     },
     toolsLoaded(state, action: PayloadAction<any>) {
@@ -36,9 +36,9 @@ const toolsSlice = createSlice({
       state.tools[1]++;
       state.loading = false;
     },
-    toolCreateError(state, action: PayloadAction<any>) {
+    toolCreateError(state) {
       toast.error(i18next.t('Whoops, something went wrong...'));
-      state.error = action.payload;
+      state.error = true;
       state.loading = false;
     },
 
@@ -52,9 +52,9 @@ const toolsSlice = createSlice({
       state.tools[0][tool] = action.payload;
       state.loading = false;
     },
-    toolEditError(state, action: PayloadAction<any>) {
+    toolEditError(state) {
       toast.error(i18next.t('Whoops, something went wrong...'));
-      state.error = action.payload;
+      state.error = true;
       state.loading = false;
     },
 
@@ -68,8 +68,8 @@ const toolsSlice = createSlice({
       state.tools[1] = state.tools[1] -= 1;
       state.loading = false;
     },
-    toolDeleteError(state, action: PayloadAction<any>) {
-      state.error = action.payload;
+    toolDeleteError(state) {
+      state.error = true;
       state.loading = false;
     },
   },
